@@ -48,6 +48,5 @@ class ReversedSequence implements  CharSequence{
     public IntStream codePoints() {
         return CharSequence.super.codePoints();
     }
-
 }
 // END
