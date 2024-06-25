@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 class ReversedSequence implements  CharSequence{
     String str;
 
-
     public ReversedSequence(String str) {
          this.str = str;
     }
