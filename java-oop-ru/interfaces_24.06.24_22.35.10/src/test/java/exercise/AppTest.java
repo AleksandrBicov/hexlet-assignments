@@ -57,6 +57,36 @@ class AppTest {
     }
 
     // BEGIN
-    
+    @Test
+    void ReversedSequence1() {
+        CharSequence text = new ReversedSequence("abcdef");
+        String result = text.toString();
+        String expected = "fedcba";
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    void ReversedSequence2() {
+        CharSequence text = new ReversedSequence("abcdef");
+        char result = text.charAt(1);
+        char expected = 'e';
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    void ReversedSequence3() {
+        CharSequence text = new ReversedSequence("abcdef");
+        int result = text.length();
+        int expected = 6;
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    void ReversedSequence4() {
+        CharSequence text = new ReversedSequence("abcdef");
+        String result = text.subSequence(1, 4).toString();
+        String expected = "edc";
+        assertThat(result).isEqualTo(expected);
+    }
     // END
 }
