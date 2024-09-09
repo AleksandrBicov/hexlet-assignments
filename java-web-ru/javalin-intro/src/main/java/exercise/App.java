@@ -13,8 +13,14 @@ public final class App {
             config.bundledPlugins.enableDevLogging();
         });
 
+
+        // Обработчик для корневого маршрута
+        app.get("/", ctx -> ctx.result("Welcome to Hexlet!"));
+
+        // Обработчик для маршрута /welcome
         app.get("/welcome", ctx -> ctx.result("Welcome to Hexlet!"));
-        return app ;
+
+        return app;
 
         // END
 
