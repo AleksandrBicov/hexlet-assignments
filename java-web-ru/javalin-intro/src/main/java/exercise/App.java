@@ -13,7 +13,7 @@ public final class App {
             config.bundledPlugins.enableDevLogging();
         });
 
-       return app.get("/", ctx -> ctx.result("Welcome to Hexlet!"));
+        return app.get("/", ctx -> ctx.result("Welcome to Hexlet!"));
         // END
 
     }
