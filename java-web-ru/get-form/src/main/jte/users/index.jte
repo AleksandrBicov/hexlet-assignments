@@ -16,7 +16,6 @@
                                  <th>First Name</th>
                                  <th>Last Name</th>
                                  <th>Email</th>
-                                 <th>Actions</th>
                              </tr>
                          </thead>
                          <tbody>
@@ -26,7 +25,6 @@
                                      <td>${user.getFirstName()}</td>
                                      <td>${user.getLastName()}</td>
                                      <td>${user.getEmail()}</td>
-                                     <td><a href="/users/${user.getId()}" class="btn btn-primary btn-sm">Посмотреть</a></td>
                                  </tr>
                              @endfor
                          </tbody>

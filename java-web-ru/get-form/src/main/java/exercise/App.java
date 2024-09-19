@@ -8,10 +8,9 @@ import java.util.stream.Collectors;
 
 import exercise.model.User;
 import exercise.dto.users.UsersPage;
-import static io.javalin.rendering.template.TemplateUtil.model;
 import io.javalin.rendering.template.JavalinJte;
-
 import org.apache.commons.lang3.StringUtils;
+
 
 public final class App {
 
@@ -28,15 +27,21 @@ public final class App {
         // BEGIN
         app.get("/users", ctx -> {
             var term = ctx.queryParam("term");
-            List<User> filterUsers = List.of();
-            if (term != null) {
-                 filterUsers = USERS.stream()
-                         .filter(user -> user.getFirstName()
-                                 .toLowerCase().contains(term.toLowerCase()))
-                         .collect(Collectors.toList());
+            List<User> users;
+            if (term == null) {
+                users = USERS;
+            } else {
+                users = USERS
+                        .stream()
+                        .filter(u -> {
+                            return StringUtils.startsWithIgnoreCase(u.getFirstName(), term);
+                        })
+                        .toList();
             }
-            var page = new UsersPage(filterUsers,term);
+
+            var page = new UsersPage(users, term);
             ctx.render("users/index.jte", Collections.singletonMap("page", page));
+
         });
         // END
 
