@@ -2,7 +2,6 @@ package exercise;
 
 import io.javalin.Javalin;
 import java.util.List;
-import java.util.Objects;
 
 import static exercise.util.Security.encrypt;
 import static io.javalin.rendering.template.TemplateUtil.model;
@@ -11,7 +10,6 @@ import exercise.model.User;
 import exercise.dto.users.UsersPage;
 import exercise.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
-import exercise.util.Security;
 
 public final class App {
 
