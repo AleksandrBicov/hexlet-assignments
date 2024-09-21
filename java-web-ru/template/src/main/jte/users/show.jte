@@ -6,33 +6,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Details</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .user-details {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .user-details h1 {
-            margin-top: 0;
-        }
-        .user-details p {
-            margin: 10px 0;
-        }
-    </style>
+    <title>Данные пользователя</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="user-details">
-        <h1>${userPage.getFirstName()} ${userPage.getLastName()}</h1>
-        <p><strong>Email:</strong> ${userPage.getEmail()}</p>
-        <p><strong>ID:</strong> ${userPage.getId()}</p>
-        <p><a href="/users/">Back</a></p>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">${userPage.getFirstName()} ${userPage.getLastName()}</h1>
+            </div>
+            <div class="card-body">
+                <p><strong>Email:</strong> ${userPage.getEmail()}</p>
+                <p><strong>ID:</strong> ${userPage.getId()}</p>
+                <p><a href="/users/" class="btn btn-primary btn-sm">Назад</a></p>
+            </div>
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

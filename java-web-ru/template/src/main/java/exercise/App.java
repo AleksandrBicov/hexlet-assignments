@@ -3,6 +3,8 @@ package exercise;
 import exercise.dto.users.UserPage;
 import exercise.dto.users.UsersPage;
 import io.javalin.Javalin;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,26 +34,21 @@ public final class App {
                         user.getLastName(),
                         user.getEmail()
                 ))
+                .sorted(Comparator.comparingLong(UserPage::getId))
                 .collect(Collectors.toList());
 
         app.get("/users", ctx -> {
-
-            var header = "users";
-
-            // Создаем объект UsersPage
+            var header = "Пользователи";
             var page = new UsersPage(userPages, header);
-
-            // Передаем объект UsersPage в шаблон
             ctx.render("users/index.jte", model("page", page));
         });
-
-        // END
 
         app.get("/users/{id}", ctx -> {
             long userId = Long.parseLong(ctx.pathParam("id"));
             Optional<UserPage> userPageOptional = userPages.stream()
-                    .filter(userPage -> userPage.getId() == userId)
+                    .filter(page -> page.getId() == userId)
                     .findFirst();
+
 
             if (userPageOptional.isPresent()) {
                 UserPage userPage = userPageOptional.get();
@@ -60,6 +57,7 @@ public final class App {
                 ctx.status(404).result("User not found");
             }
         });
+        // END
 
         app.get("/", ctx -> {
             ctx.render("index.jte");

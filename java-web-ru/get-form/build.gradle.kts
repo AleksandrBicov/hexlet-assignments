@@ -5,7 +5,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 plugins {
     id("com.github.ben-manes.versions") version "0.48.0"
     application
-    
+
     id("io.freefair.lombok") version "8.6"
 }
 

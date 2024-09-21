@@ -3,7 +3,11 @@
 
 @template.layout.page(
     content = @`
-            <table>
+        <h1>Список пользователей</h1>
+        @if(page.getUsers().isEmpty())
+            <p>Пока не добавлено ни одного пользователя</p>
+        @else
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -14,16 +18,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for(var userPage : page.getUsers())
+                    @for(var user : page.getUsers())
                         <tr>
-                            <td>${userPage.getId()}</td>
-                            <td>${userPage.getFirstName()}</td>
-                            <td>${userPage.getLastName()}</td>
-                            <td>${userPage.getEmail()}</td>
-                            <td><a href="/users/${userPage.getId()}">Посмотреть</a></td>
+                            <td>${user.getId()}</td>
+                            <td>${user.getFirstName()}</td>
+                            <td>${user.getLastName()}</td>
+                            <td>${user.getEmail()}</td>
+                            <td><a href="/users/${user.getId()}" class="btn btn-primary btn-sm">Посмотреть</a></td>
                         </tr>
                     @endfor
                 </tbody>
             </table>
+        @endif
     `
 )

@@ -1,7 +1,11 @@
 package exercise;
 
 import io.javalin.Javalin;
+
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import io.javalin.http.NotFoundResponse;
 import exercise.model.User;
 import exercise.dto.users.UserPage;
@@ -33,9 +37,11 @@ public final class App {
         });
 
         app.get("/users", ctx -> {
-            var page = new UsersPage(USERS);
+            var sortedUsers = USERS.stream()
+                    .sorted(Comparator.comparing(User::getId))
+                    .toList();
+            var page = new UsersPage(sortedUsers);
             ctx.render("users/index.jte", model("page", page));
-
         });
 
         app.get("/", ctx -> {

@@ -1,8 +1,6 @@
 package exercise;
 
 import io.javalin.Javalin;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +22,7 @@ public final class App {
 
 
             Map<String, String> company = COMPANIES.stream()
-                    .filter(comp -> id.equals(comp.get("id")))
+                    .filter(compania ->id.equals(compania.get("id")))
                     .findFirst()
                     .orElse(null);
 
@@ -40,8 +38,22 @@ public final class App {
             ctx.json(COMPANIES);
         });
 
+
         app.get("/", ctx -> {
-            ctx.result("open something like (you can change id): /companies/5");
+            ctx.contentType("text/html");
+            ctx.result("" +
+                    "<form onsubmit='event.preventDefault(); redirectToCompany(this);'>" +
+                    "  <label for='companyId'>Enter Company ID:</label>" +
+                    "  <input type='text' id='companyId' name='id' required>" +
+                    "  <button type='submit'>Search</button>" +
+                    "</form>" +
+                    "<script>" +
+                    "  function redirectToCompany(form) {" +
+                    "    var id = form.elements.id.value;" +
+                    "    window.location.href = '/companies/' + id;" +
+                    "  }" +
+                    "</script>"
+            );
         });
 
         return app;

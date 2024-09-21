@@ -15,7 +15,7 @@ public final class App {
 
 
         // Обработчик для корневого маршрута
-        app.get("/", ctx -> ctx.result("Welcome to Hexlet!"));
+        app.get("/", ctx -> ctx.result("Welcome!"));
 
         // Обработчик для маршрута /welcome
         app.get("/welcome", ctx -> ctx.result("Welcome to Hexlet!"));

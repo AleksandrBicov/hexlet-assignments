@@ -13,6 +13,13 @@ public final class App {
             config.bundledPlugins.enableDevLogging();
         });
 
+
+        app.get("/", ctx -> {
+            ctx.contentType("text/html");
+            ctx.result("<p><a href='http://localhost:7070/phones'>phones</a></p>"
+                    + "<p><a href='http://localhost:7070/domains'>domains</a></p>");
+        });
+
         app.get("/phones", ctx -> {
             // Создаем объект для сериализации в JSON
             List<String> newList = Data.getPhones();

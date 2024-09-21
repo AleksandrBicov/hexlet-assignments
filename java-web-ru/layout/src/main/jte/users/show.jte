@@ -3,9 +3,15 @@
 
 @template.layout.page(
     content = @`
-        <h1>${page.getUser().getFirstName()} ${page.getUser().getLastName()}</h1>
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">${page.getUser().getFirstName()} ${page.getUser().getLastName()}</h1>
+            </div>
+            <div class="card-body">
                 <p><strong>Email:</strong> ${page.getUser().getEmail()}</p>
                 <p><strong>ID:</strong> ${page.getUser().getId()}</p>
-                <p><a href="/users/">Назад</a></p>
+                <p><a href="/users/" class="btn btn-primary btn-sm">Назад</a></p>
+            </div>
+        </div>
     `
 )

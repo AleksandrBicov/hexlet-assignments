@@ -16,6 +16,11 @@ public final class App {
             config.bundledPlugins.enableDevLogging();
         });
 
+        app.get("/", ctx -> {
+            ctx.contentType("text/html");
+            ctx.result("<h1 align=\"center\">Hello Hexlet</h1>");
+        });
+
         // BEGIN
         app.get("/users", ctx -> {
 
