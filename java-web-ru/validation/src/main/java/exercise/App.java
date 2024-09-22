@@ -10,7 +10,6 @@ import java.util.List;
 import exercise.model.Article;
 import exercise.dto.articles.ArticlesPage;
 
-import static exercise.repository.ArticleRepository.search;
 import static io.javalin.rendering.template.TemplateUtil.model;
 import io.javalin.rendering.template.JavalinJte;
 
@@ -44,33 +43,29 @@ public final class App {
 
         app.post("/articles", ctx -> {
             try {
-                String title  = ctx.formParamAsClass("title", String.class)
+                String title = ctx.formParamAsClass("title", String.class)
                         .check(value -> value.length() >= 2, "Название не должно быть короче двух символов")
+                        .check(value -> !ArticleRepository.existsByTitle(value), "Статья с таким названием уже существует")
                         .get();
 
-                ctx.formParamAsClass("title", String.class)
-                        .check(value -> search(value).isEmpty(), "Статья с таким названием уже существует")
-                        .get();
-
-                String content = ctx.formParamAsClass("contents", String.class)
+                String content = ctx.formParamAsClass("content", String.class)
                         .check(value -> value.length() >= 10, "Статья должна быть не короче 10 символов")
                         .get();
 
                 var article = new Article(title, content);
-
                 ArticleRepository.save(article);
-
-                ctx.redirect("/articles");
-            } catch (ValidationException e) {
+                ctx.status(302).redirect("/articles");
+            } catch (ValidationException exception) {
                 String title = ctx.formParam("title");
-                String content = ctx.formParam("contents");
+                String content = ctx.formParam("content");
+                var page = new BuildArticlePage(title, content, exception.getErrors());
+                ctx.status(422).render("articles/build.jte", model("page", page));
 
-                var page = new BuildArticlePage(title, content, e.getErrors());
-
-                ctx.status(422);
-                ctx.render("articles/build.jte", model("page", page));
+                exception.getErrors().forEach((key, value) ->
+                        System.out.println("Ошибка по ключу: " + key + " - " + value));
             }
         });
+
         // END
 
         return app;

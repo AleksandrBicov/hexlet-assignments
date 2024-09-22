@@ -4,6 +4,7 @@ import io.javalin.validation.ValidationError;
 import java.util.Map;
 import java.util.List;
 
+import io.javalin.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,9 @@ import lombok.Getter;
 @NoArgsConstructor
 public class BuildArticlePage {
     private String title;
-    private String contents;
+    private String content;
     private Map<String, List<ValidationError<Object>>> errors;
+
+
 }
 // END

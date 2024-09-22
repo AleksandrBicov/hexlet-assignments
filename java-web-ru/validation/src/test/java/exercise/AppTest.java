@@ -1,6 +1,9 @@
 package exercise;
 
+import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
+
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
@@ -56,7 +59,7 @@ class AppTest {
 
     @Test
     void testCreateArticlePositive() throws Exception {
-        HttpResponse responsePost = Unirest
+        HttpResponse<String> responsePost = Unirest
             .post(baseUrl + "/articles")
             .field("title", "test title")
             .field("content", "test content")
