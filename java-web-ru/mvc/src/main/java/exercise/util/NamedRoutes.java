@@ -23,8 +23,8 @@ public class NamedRoutes {
     }
 
     // BEGIN
-    public static String postEdit() {
-        return "/posts/edit/{id}";
+    public static String postEdit(String id) {
+        return "/posts/" + id+ "/edit";
     }
     // END
 }

@@ -24,7 +24,8 @@ public final class App {
         app.get(NamedRoutes.postPath("{id}"), PostsController::show);
 
         // BEGIN
-        app.get(NamedRoutes.postEdit(), PostsController::edit);
+        app.get(NamedRoutes.postEdit("{id}"), PostsController::edit);
+        app.post(NamedRoutes.postPath("{id}"), PostsController::update);
         // END
 
         return app;
@@ -32,6 +33,6 @@ public final class App {
 
     public static void main(String[] args) {
         Javalin app = getApp();
-        app.start(8550);
+        app.start(7070);
     }
 }

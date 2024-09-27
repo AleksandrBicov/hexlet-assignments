@@ -8,12 +8,13 @@
                 <ul>
                     @for(var validator : page.getErrors().values())
                         @for(var error : validator)
-                            <li>${error.getMessage()}</li>
+                            <li>${error != null ? error.getMessage() : "Unknown error"}</li>
                         @endfor
                     @endfor
                 </ul>
             </div>
         @endif
+
 
         <div class="mx-auto p-4 py-md-5">
             <form action="/posts" method="post">

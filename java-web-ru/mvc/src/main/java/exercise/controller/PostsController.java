@@ -1,5 +1,6 @@
 package exercise.controller;
 
+
 import static io.javalin.rendering.template.TemplateUtil.model;
 import exercise.dto.posts.PostsPage;
 import exercise.dto.posts.PostPage;
@@ -12,8 +13,6 @@ import exercise.util.NamedRoutes;
 import io.javalin.http.Context;
 import io.javalin.validation.ValidationException;
 import io.javalin.http.NotFoundResponse;
-
-import java.util.Optional;
 
 public class PostsController {
 
@@ -60,37 +59,43 @@ public class PostsController {
     }
 
     // BEGIN
-public static void edit(Context ctx) {
-    try {
+    public static void edit(Context ctx) {
+        var id = ctx.pathParamAsClass("id", Long.class).get();
+        var post = PostRepository.find(id)
+                .orElseThrow(() -> new NotFoundResponse("Post not found"));
 
-        Long id = Long.parseLong(ctx.pathParam("id"));
+        var page = new EditPostPage(id, post.getName(), post.getBody(), null);
+        ctx.render("posts/edit.jte", model("page", page));
+    }
 
-        var name = ctx.formParamAsClass("name", String.class)
-                .check(value -> value.length() >= 2, "Название не должно быть короче двух символов")
-                .get();
+    public static void update(Context ctx) {
 
-        var body = ctx.formParamAsClass("body", String.class)
-                .check(value -> value.length() >= 10, "Пост должен быть не короче 10 символов")
-                .get();
+        var id = ctx.pathParamAsClass("id", Long.class).get();
 
-        Optional<Post> postOptional = PostRepository.find(id);
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get();
+        try {
+            var name = ctx.formParamAsClass("name", String.class)
+                    .check(value -> value.length() >= 2, "Название не должно быть короче двух символов")
+                    .get();
+
+            var body = ctx.formParamAsClass("body", String.class)
+                    .check(value -> value.length() >= 10, "Пост должен быть не короче 10 символов")
+                    .get();
+
+            var post = PostRepository.find(id)
+                    .orElseThrow(() -> new NotFoundResponse("Post not found"));
+
             post.setName(name);
             post.setBody(body);
+
             PostRepository.save(post);
             ctx.redirect(NamedRoutes.postsPath());
-        } else {
-            ctx.status(404).result(" Page not found " + id );
-        }
 
-    } catch (ValidationException e) {
-        Long id = Long.parseLong(ctx.pathParam("id"));
-        var name = ctx.formParam("name");
-        var body = ctx.formParam("body");
-        var page = new EditPostPage(id,name, body, e.getErrors());
-        ctx.render("posts/edit.jte", model("page", page)).status(422);
+        } catch (ValidationException e) {
+            var name = ctx.formParam("name");
+            var body = ctx.formParam("body");
+            var page = new EditPostPage(id, name, body, e.getErrors());
+            ctx.render("posts/edit.jte", model("page", page)).status(422);
+        }
     }
-}
     // END
 }

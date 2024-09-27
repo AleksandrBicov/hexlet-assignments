@@ -13,7 +13,7 @@
                 ${page.getPost().getBody()}
             </div>
             <!-- BEGIN -->
-            <a href="/posts/edit/${page.getPost().getId()}">Редактировать</a>
+            <a href="/posts/${page.getPost().getId()}/edit">Редактировать</a>
             <!-- END -->
         </main>
     `
