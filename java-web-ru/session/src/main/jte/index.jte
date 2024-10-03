@@ -1,18 +1,24 @@
-@import exercise.dto.MainPage
-@import exercise.util.NamedRoutes;
-@param MainPage page
+@import exercise.dto.LoginPage
+@import exercise.util.NamedRoutes
+@param LoginPage page
 
 @template.layout.page(
-    content = @`
-            <h1>Привет, Хекслет!</h1>
-            @if(page.getName() == null)
-                <form action="${NamedRoutes.buildSessionPath()}" method="get">
-                                    <button type="submit">Войти</button>
-                </form>
-            @else
-                <form action="${NamedRoutes.logoutPath()}" method="get">
-                <button type="submit">Выйти</button>
-                 </form>
-            @endif
+content = @`
+    @if(page.getName() != null)
+        <p>Вы вошли как: ${page.getName()}</p>
+        <form action="${NamedRoutes.logoutPath()}" method="post">
+            <input type="submit" value="Выйти" />
+        </form>
+    @elseif(page.getError() != null)
+        <p>${page.getError()}</p>
+        <form action="${NamedRoutes.buildSessionPath()}" method="get">
+            <input type="submit" value="Войти" />
+
+        </form>
+    @else
+        <form action="${NamedRoutes.buildSessionPath()}" method="get">
+            <input type="submit" value="Войти" />
+        </form>
+    @endif
     `
 )

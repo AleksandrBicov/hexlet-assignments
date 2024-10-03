@@ -15,7 +15,7 @@ public class SessionsController {
 
     // BEGIN
     public static void index(Context ctx) {
-        var page = new MainPage(ctx.sessionAttribute("name"));
+        var page = new LoginPage(ctx.sessionAttribute("name"),null);
         ctx.render("index.jte", model("page", page));
     }
 
@@ -45,14 +45,14 @@ public class SessionsController {
             ctx.sessionAttribute("name", name);
             ctx.redirect("/");
         } else {
-            ctx.attribute("error", "Wrong username or password.");
-            ctx.render("build.jte");
+            var page = new LoginPage(ctx.sessionAttribute("name"),"Wrong username or password.");
+            ctx.render("index.jte", model("page", page));
         }
     }
 
 
     public static void delete(Context ctx) {
-        ctx.sessionAttribute("currentUser", null);
+        ctx.sessionAttribute("name", null);
         ctx.redirect("/");
     }
     // END
